@@ -26,7 +26,7 @@ The easiest way to store data such as http response,String,int,double,bool,map,l
 
 ## Installation
 
-Add starlight_country_picker as dependency to your pubspec file.
+Add starlight_http_cached as dependency to your pubspec file.
 
 ```dart
 starlight_http_cached: 

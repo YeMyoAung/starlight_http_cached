@@ -48,10 +48,14 @@ class StarlightHttpCached {
     if (_directory == null) {
       throw Exception("No instance not found.");
     }
-    _callBack(data, (String chunk) {
-      final File _file = File('${_directory!.path}/$name');
-      _file.writeAsStringSync(chunk, flush: true);
-    });
+    try {
+      _callBack(data, (String chunk) {
+        final File _file = File('${_directory!.path}/$name');
+        _file.writeAsStringSync(chunk, flush: true);
+      });
+    } catch (e) {
+      ///ToDo
+    }
   }
 
   ///Get Cached [dynamic]
@@ -59,8 +63,12 @@ class StarlightHttpCached {
     if (_directory == null) {
       throw Exception("No instance not found.");
     }
-    final File _file = File('${_directory!.path}/$name');
-    return json.decode(_file.readAsStringSync());
+    try {
+      final File _file = File('${_directory!.path}/$name');
+      return json.decode(_file.readAsStringSync());
+    } catch (e) {
+      return null;
+    }
   }
 
   ///Delete Cached [Void]
@@ -68,7 +76,11 @@ class StarlightHttpCached {
     required String name,
   }) {
     final File _file = File('${_directory!.path}/$name');
-    _file.deleteSync();
+    try {
+      _file.deleteSync();
+    } catch (e) {
+      ///ToDo
+    }
   }
 
   ///Has Cached [bool]
@@ -76,7 +88,11 @@ class StarlightHttpCached {
     if (_directory == null) {
       throw Exception("No instance not found.");
     }
-    final File _file = File('${_directory!.path}/$name');
-    return _file.existsSync();
+    try {
+      final File _file = File('${_directory!.path}/$name');
+      return _file.existsSync();
+    } catch (e) {
+      return false;
+    }
   }
 }
